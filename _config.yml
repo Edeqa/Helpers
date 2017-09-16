@@ -1,0 +1,8 @@
+title: Edeqa Helpers
+description: Some helpers
+show_downloads: true
+theme: jekyll-theme-slate
+
+gems:
+  - jekyll-mentions
+  - jekyll-readme-index
