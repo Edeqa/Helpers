@@ -20,6 +20,7 @@ import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
 import java.util.List;
+import java.util.Locale;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -170,4 +171,74 @@ public class Misc {
         return sb.toString();
     }
 
+    public static String formatLengthToLocale(double meters) {
+        if(Locale.US.equals(Locale.getDefault())) {
+            meters = meters * 3.2808399;
+            if(meters < 530) {
+                return String.format("%4.0f %s", meters, "ft");
+            } else {
+                meters = meters / 5280;
+                return String.format("%4.1f %s", meters, "mi");
+            }
+        } else {
+            String unit = "m";
+            if (meters < 1) {
+                meters *= 1000;
+                unit = "mm";
+            } else if (meters > 1000) {
+                meters /= 1000;
+                unit = "km";
+            }
+            return String.format("%4.1f %s", meters, unit);
+        }
+    }
+
+    public static String toDateString(long millis) {
+        StringBuilder res = new StringBuilder();
+
+        int days = (int) (millis / (24 * 60 * 60 * 1000));
+        millis = millis - days * (24 * 60 * 60 * 1000);
+
+        int hours = (int) (millis / (60 * 60 * 1000));
+        millis = millis - hours * (60 * 60 * 1000);
+
+        int minutes = (int) (millis / (60 * 1000));
+        millis = millis - minutes * (60 * 1000);
+
+        int seconds = (int) (millis / (1000));
+        millis = millis - seconds * (1000);
+
+        if(days > 0 || hours > 0) {
+            if(seconds > 30) {
+                minutes ++;
+            }
+            seconds = 0;
+        }
+        if(minutes > 59) {
+            hours ++;
+            minutes = 0;
+        }
+        if(hours > 23) {
+            days ++;
+            hours = 0;
+        }
+
+        if(days > 0) {
+            res.append(days + "d");
+        }
+        if(hours > 0) {
+            if(res.length() > 0) res.append(" ");
+            res.append(hours + "h");
+        }
+        if(minutes > 0) {
+            if(res.length() > 0) res.append(" ");
+            res.append(minutes + "m");
+        }
+        if(seconds > 0) {
+            if(res.length() > 0) res.append(" ");
+            res.append(seconds + "s");
+        }
+
+        return res.toString();
+    }
 }
