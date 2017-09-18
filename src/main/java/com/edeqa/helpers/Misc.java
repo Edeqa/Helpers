@@ -49,6 +49,9 @@ public class Misc {
             case 256:
                 sType = "SHA-256";
                 break;
+            case 384:
+                sType = "SHA-384";
+                break;
             case 512:
                 sType = "SHA-512";
                 break;
@@ -72,8 +75,7 @@ public class Misc {
     }
 
     public static String getUnique() {
-        SecureRandom random = new SecureRandom();
-        return new BigInteger(48, random).toString(32).toUpperCase();
+        return new BigInteger(48, new SecureRandom()).toString(32).toUpperCase();
     }
 
     public static void pause(int i) {
@@ -142,6 +144,10 @@ public class Misc {
         return response.toString();
     }
 
+    public static String getUrl(String url) throws IOException {
+        return getUrl(url, "UTF-8");
+    }
+
     public static String getUrl(String url, String urlCharset) throws IOException {
         String line;
         StringBuilder sb = new StringBuilder();
@@ -163,4 +169,5 @@ public class Misc {
 
         return sb.toString();
     }
+
 }
