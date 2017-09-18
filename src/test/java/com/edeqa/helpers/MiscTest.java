@@ -74,12 +74,13 @@ public class MiscTest {
 
     @Test
     public void formatLengthToLocale() throws Exception {
-        Assert.assertEquals(" 7.7 mi", Misc.formatLengthToLocale(12345));
+        Assert.assertEquals(" 7.7 mi", Misc.distanceToString(12345));
     }
 
     @Test
     public void toDateString() throws Exception {
-        Assert.assertEquals("1d 10h 18m", Misc.toDateString(123456789));
+        Assert.assertEquals("1d 10h 18m", Misc.durationToString(123456789));
+        Assert.assertEquals("17425d 3h 55m", Misc.durationToString(1505534126840L));
     }
 
 }

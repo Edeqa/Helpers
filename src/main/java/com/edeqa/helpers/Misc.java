@@ -171,7 +171,7 @@ public class Misc {
         return sb.toString();
     }
 
-    public static String formatLengthToLocale(double meters) {
+    public static String distanceToString(double meters) {
         if(Locale.US.equals(Locale.getDefault())) {
             meters = meters * 3.2808399;
             if(meters < 530) {
@@ -193,20 +193,20 @@ public class Misc {
         }
     }
 
-    public static String toDateString(long millis) {
+    public static String durationToString(long millis) {
         StringBuilder res = new StringBuilder();
 
         int days = (int) (millis / (24 * 60 * 60 * 1000));
-        millis = millis - days * (24 * 60 * 60 * 1000);
+        millis = millis - days * (24 * 60 * 60 * 1000L);
 
-        int hours = (int) (millis / (60 * 60 * 1000));
-        millis = millis - hours * (60 * 60 * 1000);
+        int hours = (int) (millis / (60 * 60 * 1000L));
+        millis = millis - hours * (60 * 60 * 1000L);
 
-        int minutes = (int) (millis / (60 * 1000));
-        millis = millis - minutes * (60 * 1000);
+        int minutes = (int) (millis / (60 * 1000L));
+        millis = millis - minutes * (60 * 1000L);
 
-        int seconds = (int) (millis / (1000));
-        millis = millis - seconds * (1000);
+        int seconds = (int) (millis / (1000L));
+        millis = millis - seconds * (1000L);
 
         if(days > 0 || hours > 0) {
             if(seconds > 30) {
