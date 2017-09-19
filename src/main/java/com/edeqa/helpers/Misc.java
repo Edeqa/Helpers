@@ -175,10 +175,10 @@ public class Misc {
         if(Locale.US.equals(Locale.getDefault())) {
             meters = meters * 3.2808399;
             if(meters < 530) {
-                return String.format("%4.0f %s", meters, "ft");
+                return String.format("%.0f %s", meters, "ft");
             } else {
                 meters = meters / 5280;
-                return String.format("%4.1f %s", meters, "mi");
+                return String.format("%.1f %s", meters, "mi");
             }
         } else {
             String unit = "m";
@@ -189,7 +189,7 @@ public class Misc {
                 meters /= 1000;
                 unit = "km";
             }
-            return String.format("%4.1f %s", meters, unit);
+            return String.format("%.1f %s", meters, unit);
         }
     }
 
