@@ -16,6 +16,9 @@ import java.util.Map;
 public class HtmlGenerator {
 
     public static final String META = "meta";
+    public static final String HEAD = "head";
+    public static final String HTML = "html";
+    public static final String BODY = "body";
     public static final String STYLE = "style";
     public static final String CLASS = "class";
     public static final String DIV = "div";
@@ -68,8 +71,8 @@ public class HtmlGenerator {
     Map<String,String> properties = new HashMap<>();
 
     public HtmlGenerator() {
-        head = new Tag("head");
-        body = new Tag("body");
+        head = new Tag(HEAD);
+        body = new Tag(BODY);
     }
 
     public Tag getHead(){
@@ -83,7 +86,7 @@ public class HtmlGenerator {
     public String build(){
         String res = "<!DOCTYPE html>\n";
         ArrayList<String> parts = new ArrayList<>();
-        parts.add("html");
+        parts.add(HTML);
         for(Map.Entry<String,String> entry: properties.entrySet()){
             if(entry.getValue() != null && entry.getValue().length() > 0) {
                 parts.add(entry.getKey() + "=\"" + entry.getValue() + "\"");
@@ -99,8 +102,8 @@ public class HtmlGenerator {
     }
 
     public void clear(){
-        head = new Tag("head");
-        body = new Tag("body");
+        head = new Tag(HEAD);
+        body = new Tag(BODY);
         properties.clear();
     }
 

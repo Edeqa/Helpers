@@ -41,9 +41,9 @@ public class Misc {
             case 1:
                 sType = "SHA-1";
                 break;
-            case 2:
-                sType = "MD2";
-                break;
+//            case 2:
+//                sType = "MD2";
+//                break;
             case 5:
                 sType = "MD5";
                 break;
@@ -185,11 +185,14 @@ public class Misc {
             if (meters < 1) {
                 meters *= 1000;
                 unit = "mm";
+                return String.format("%.0f %s", meters, unit);
             } else if (meters > 1000) {
                 meters /= 1000;
                 unit = "km";
+                return String.format("%.1f %s", meters, unit);
+            } else {
+                return String.format("%.1f %s", meters, unit);
             }
-            return String.format("%.1f %s", meters, unit);
         }
     }
 
