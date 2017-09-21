@@ -43,7 +43,7 @@ Step 2. Add the dependency:
 
 ## How to use
 
-See the [Javadoc](https://edeqa.github.io/Helpers/javadoc/) to learn more about the API.
+See the [Javadoc](https://edeqa.github.io/Helpers/) to learn more about the API.
 
 ## History
 
