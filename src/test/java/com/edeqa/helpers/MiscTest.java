@@ -40,26 +40,32 @@ public class MiscTest {
 
     @Test
     public void getUrl() throws Exception {
-        String res = Misc.getUrl("https://www.waytous.net/rest/v1/getVersion");
+        String res = Misc.getUrl("http://echo.jsontest.com/one/two");
         LOGGER.info(res);
         JSONObject json = new JSONObject(res);
-        Assert.assertEquals("success", json.getString("status"));
+        Assert.assertEquals("two", json.getString("one"));
     }
 
     @Test
     public void getUrl1() throws Exception {
-        String res = Misc.getUrl("https://www.waytous.net/rest/v1/getVersion", "CP-1251");
+        String res = Misc.getUrl("http://echo.jsontest.com/one/two", "UTF-8");
         LOGGER.info(res);
         JSONObject json = new JSONObject(res);
-        Assert.assertEquals("success", json.getString("status"));
+        Assert.assertEquals("two", json.getString("one"));
     }
 
     @Test
     public void getUrl2() throws Exception {
-        String res = Misc.getUrl("https://www.waytous.net/rest/v1/getVersion", "post text", "CP-1251");
+        String res = Misc.getUrl("http://echo.jsontest.com", "{\"one\":\"two\"}", "UTF-8");
         LOGGER.info(res);
         JSONObject json = new JSONObject(res);
-        Assert.assertEquals("success", json.getString("status"));
+        Assert.assertEquals("{\"\": \"\"}", res);
+
+        try {
+            res = Misc.getUrl("https://api.ipify.org/?format=json", "{\"one\":\"two\"}", "UTF-8");
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Test

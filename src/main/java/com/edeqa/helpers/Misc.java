@@ -14,6 +14,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.math.BigInteger;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
@@ -105,8 +106,12 @@ public class Misc {
         if(urlCharset == null) urlCharset = "UTF-8";
 
         URL obj = new URL(url);
-        HttpsURLConnection con = (HttpsURLConnection) obj.openConnection();
-
+        HttpURLConnection con;
+        if(url.toLowerCase().startsWith("https://")) {
+            con = (HttpsURLConnection) obj.openConnection();
+        } else {
+            con = (HttpURLConnection) obj.openConnection();
+        }
 
         //add reuqest header
         con.setRequestMethod("POST");
