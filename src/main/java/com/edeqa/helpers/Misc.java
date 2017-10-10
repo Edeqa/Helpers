@@ -7,6 +7,8 @@
 package com.edeqa.helpers;
 
 import com.google.common.net.HttpHeaders;
+import com.google.common.primitives.Doubles;
+import com.google.common.primitives.Floats;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -22,6 +24,7 @@ import java.security.MessageDigest;
 import java.security.SecureRandom;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -249,4 +252,18 @@ public class Misc {
 
         return res.toString();
     }
+
+    public static boolean isEmpty(Object object) {
+        if(object == null) return true;
+        if(object instanceof Boolean && !((Boolean) object)) return true;
+        if(object instanceof String && ((String) object).length() == 0) return true;
+        if(object instanceof Integer && Integer.valueOf(object.toString()) == 0) return true;
+        if(object instanceof Long && Long.valueOf(object.toString()) == 0L) return true;
+        if(object instanceof Float && Float.valueOf(object.toString()) == 0F) return true;
+        if(object instanceof Double && Double.valueOf(object.toString()) == 0D) return true;
+        if(object instanceof Map && ((Map) object).size() == 0) return true;
+        if(object instanceof List && ((List) object).size() == 0) return true;
+        return false;
+    }
+
 }
