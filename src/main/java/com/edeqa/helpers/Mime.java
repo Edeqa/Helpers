@@ -11,6 +11,7 @@ public class Mime {
     public static final String APPLICATION_JSON = "application/json",
             TEXT_PLAIN = "text/plain",
             TEXT_HTML = "text/html",
+            TEXT_EVENT_STREAM = "text/event-stream",
             APPLICATION_OCTET_STREAM = "application/octet-stream",
             APPLICATION_JAVASCRIPT = "application/javascript",
             TEXT_CSS = "text/css",
