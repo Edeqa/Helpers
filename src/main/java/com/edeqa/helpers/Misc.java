@@ -15,6 +15,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.math.BigInteger;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -22,6 +25,9 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -123,8 +129,6 @@ public class Misc {
 //        con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
         con.setRequestProperty(HttpHeaders.CONTENT_TYPE, "application/json");
         con.setRequestProperty(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
-
-//        String urlParameters = "sn=C02G8416DRJM&cn=&locale=&caller=&num=12345";
 
         // Send post request
         con.setDoOutput(true);
@@ -253,6 +257,22 @@ public class Misc {
         return res.toString();
     }
 
+    /**
+     * Checks the object for empty state. This means one of following:
+     * <ul>
+     * <li>null
+     * <li>false
+     * <li>"" (empty string)
+     * <li>0
+     * <li>0L
+     * <li>0.0F
+     * <li>0.0D
+     * <li>empty map
+     * <li>empty list
+     * </ul>
+     * @param object any object
+     * @return
+     */
     public static boolean isEmpty(Object object) {
         if(object == null) return true;
         if(object instanceof Boolean && !((Boolean) object)) return true;
@@ -264,6 +284,105 @@ public class Misc {
         if(object instanceof Map && ((Map) object).size() == 0) return true;
         if(object instanceof List && ((List) object).size() == 0) return true;
         return false;
+    }
+
+    /**
+     * Returns string that represents the deep structure of object including public maps and lists. Also public methods are listed.
+     * @param object any object
+     * @return string
+     */
+    public static String toStringDeep(Object object) {
+        if(object == null) return "null";
+        String res = "toStringDeep: " + object.getClass().getCanonicalName();
+        Map<String, Boolean> own = new HashMap();
+        try {
+            Field[] fields = object.getClass().getDeclaredFields();
+            String respart = "";
+            if (fields.length > 0) {
+                for(Field field : fields) {
+                    if (!Modifier.isPublic(field.getModifiers())) continue;
+                    Object value = field.get(object);
+                    own.put(field.getName(), true);
+                    if (value != null && value instanceof Map) {
+                        respart += field.getName() + ": " + value;
+                    } else if (value != null && value instanceof List) {
+                        respart += field.getName() + ": " + value;
+                    } else {
+                        respart += field.getName() + ": " + value;
+                    }
+                    respart += ", ";
+                }
+                if(respart.length() > 0) {
+                    res += "\n>> Own variables: {" + respart + "}";
+                }
+            }
+            fields = object.getClass().getFields();
+            if (fields.length > 0) {
+                respart = "";
+                for(Field field : fields) {
+                    if (own.containsKey(field.getName()) || !Modifier.isPublic(field.getModifiers())) continue;
+                    Object value = field.get(object);
+                    if (value != null && value instanceof Map) {
+                        respart += field.getName() + ": " + value;
+                    } else if (value != null && value instanceof List) {
+                        respart += field.getName() + ": " + value;
+                    } else {
+                        respart += field.getName() + ": " + value;
+                    }
+                    respart += ", ";
+                }
+                if(respart.length() > 0) {
+                    res += "\n>> Super variables: {" + respart + "}";
+                }
+            }
+            Method[] methods = object.getClass().getDeclaredMethods();
+            own.clear();
+            if (methods.length > 0) {
+                respart = "";
+                for(Method method : methods) {
+                    if (!Modifier.isPublic(method.getModifiers())) continue;
+                    own.put(method.getName(), true);
+                    respart += method.getName() + ", ";
+                }
+                if(respart.length() > 0) {
+                    res += "\n>> Own methods: [" + respart + "]";
+                }
+            }
+            methods = object.getClass().getMethods();
+            List<Method> getters = new ArrayList();
+            if (methods.length > 0) {
+                respart = "";
+                for(Method method : methods) {
+                    if (method.getName().startsWith("get") && method.getParameterTypes().length == 0) getters.add(method);
+                    if ("equals".equals(method.getName()) || "getClass".equals(method.getName())
+                            || "hashCode".equals(method.getName()) || "notify".equals(method.getName())
+                            || "notifyAll".equals(method.getName()) || "wait".equals(method.getName())) continue;
+                    if (own.containsKey(method.getName()) || !Modifier.isPublic(method.getModifiers())) continue;
+                    respart += method.getName() + ", ";
+                }
+                if(respart.length() > 0) {
+                    res += "\n>> Super methods: [" + respart + "]";
+                }
+            }
+
+            if(getters.size() > 0) {
+                respart = "";
+                for(Method method: getters) {
+                    if("getClass".equals(method.getName())) continue;
+                    Object value = method.invoke(object);
+                    if(value != null && value instanceof String && value.toString().length() > 200) value = "[String " + value.toString().length() + " byte(s)]";
+                    else if(value != null && value.toString().length() > 1024) value = "[" + value.getClass().getSimpleName() + " " + value.toString().length() + " byte(s)]";
+                    respart += method.getName() + ": " + value + ", ";
+                }
+                if(respart.length() > 0) {
+                    res += "\n>> Getters: {" + respart + "}";
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        res += "}";
+        return res;
     }
 
 }
