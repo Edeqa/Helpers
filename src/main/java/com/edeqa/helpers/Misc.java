@@ -10,6 +10,7 @@ import com.google.common.net.HttpHeaders;
 import com.google.common.primitives.Doubles;
 import com.google.common.primitives.Floats;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -353,7 +354,7 @@ public class Misc {
             if (methods.length > 0) {
                 respart = "";
                 for(Method method : methods) {
-                    if (method.getName().startsWith("get") && method.getParameterTypes().length == 0) getters.add(method);
+                    if ((method.getName().startsWith("get") || method.getName().startsWith("is")) && method.getParameterTypes().length == 0) getters.add(method);
                     if ("equals".equals(method.getName()) || "getClass".equals(method.getName())
                             || "hashCode".equals(method.getName()) || "notify".equals(method.getName())
                             || "notifyAll".equals(method.getName()) || "wait".equals(method.getName())) continue;
@@ -364,7 +365,6 @@ public class Misc {
                     res += "\n>> Super methods: [" + respart + "]";
                 }
             }
-
             if(getters.size() > 0) {
                 respart = "";
                 for(Method method: getters) {
@@ -381,7 +381,6 @@ public class Misc {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        res += "}";
         return res;
     }
 
