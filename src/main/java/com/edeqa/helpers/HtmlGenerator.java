@@ -13,6 +13,7 @@ import java.util.Map;
  * Created 10/18/16.
  */
 
+@SuppressWarnings({"HardCodedStringLiteral", "unused", "WeakerAccess"})
 public class HtmlGenerator {
 
     public static final String META = "meta";
@@ -132,19 +133,19 @@ public class HtmlGenerator {
 
         public String build(){
 //            String res = "\n";
-            StringBuffer buf = new StringBuffer();
+            StringBuilder buf = new StringBuilder();
             buf.append("\n");
             for(int i=0;i<level;i++) buf.append("   ");
 
-            buf.append("<"+tag);
+            buf.append("<").append(tag);
 
             if(!properties.isEmpty()){
                 for(Map.Entry<String,String> x:properties.entrySet()){
                     String key = x.getKey();
                     String value = x.getValue();
-                    key = key.replaceAll("\\\"","&quot;");
-                    value = value.replaceAll("\\\"","&quot;");
-                    buf.append(" "+key+"=\""+ value +"\"");
+                    key = key.replaceAll("\"","&quot;");
+                    value = value.replaceAll("\"","&quot;");
+                    buf.append(" ").append(key).append("=\"").append(value).append("\"");
                 }
             }
 
@@ -166,7 +167,7 @@ public class HtmlGenerator {
                 for (int i = 0; i < level; i++) buf.append("   ");
             }
             if(!notClosableTags.contains(tag)) {
-                buf.append("</" + tag + ">");
+                buf.append("</").append(tag).append(">");
             }
             return buf.toString();
         }
@@ -205,9 +206,9 @@ public class HtmlGenerator {
             inner.add(number.toString());
             return this;
         }
-
     }
 
+    @SuppressWarnings("SameParameterValue")
     private static String join(String conjunction, List<String> list) {
         StringBuilder sb = new StringBuilder();
         boolean first = true;

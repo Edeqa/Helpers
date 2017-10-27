@@ -8,6 +8,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -19,12 +20,16 @@ import static org.junit.Assert.assertTrue;
  * Created 9/17/2017.
  */
 public class MiscTest {
-
     private final static Logger LOGGER = Logger.getLogger(MiscTest.class.getName());
 
     @Before
     public void setUp() throws Exception {
 
+    }
+
+    @Test
+    public void constructor() throws Exception {
+        Misc misc = new Misc();
     }
 
     @Test
@@ -153,6 +158,52 @@ public class MiscTest {
         assertTrue(!Misc.isEmpty(notZeroLong));
         assertTrue(!Misc.isEmpty(notZeroFloat));
         assertTrue(!Misc.isEmpty(notZeroDouble));
+
+    }
+
+    @Test
+    public void toStringDeep() throws Exception {
+        class TestObject {
+            private Map privateMap = new HashMap();
+            public Map publicMap = new HashMap();
+            private List privateList = new ArrayList<>();
+            public List publicList = new ArrayList<>();
+            private String privateString = "private string";
+            public String publicString = "public string";
+            private void privateTestMethod() {}
+            public void publicTestMethod() {}
+            private String getPrivateString() {return privateString;}
+            public String getPublicString() {return publicString;}
+            TestObject(){
+                privateMap.put("map key 1", "map value 1");
+                publicMap.put("map key 2", "map value 2");
+                privateList.add("list value 1");
+                publicList.add("list value 2");
+            }
+        }
+        class ChildTestObject extends TestObject {
+            private Map privateChildMap = new HashMap();
+            public Map publicChildMap = new HashMap();
+            private List privateChildList = new ArrayList<>();
+            public List publicChildList = new ArrayList<>();
+            private String privateChildString = "private child string";
+            public String publicChildString = "public child string";
+            private void privateChildTestMethod() {}
+            public void publicChildTestMethod() {}
+            private String getPrivateChildString() {return privateChildString;}
+            public String getPublicChildString() {return publicChildString;}
+            ChildTestObject(){
+                super();
+                privateChildMap.put("map key 3", "map value 3");
+                publicChildMap.put("map key 4", "map value 4");
+                privateChildList.add("list value 3");
+                publicChildList.add("list value 4");
+            }
+        }
+
+
+        TestObject testObject = new ChildTestObject();
+        LOGGER.info(Misc.toStringDeep(testObject));
 
     }
 

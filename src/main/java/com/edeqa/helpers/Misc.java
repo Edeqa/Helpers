@@ -7,10 +7,7 @@
 package com.edeqa.helpers;
 
 import com.google.common.net.HttpHeaders;
-import com.google.common.primitives.Doubles;
-import com.google.common.primitives.Floats;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,7 +24,6 @@ import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -35,12 +31,21 @@ import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
+@SuppressWarnings({"WeakerAccess", "SameParameterValue"})
 public class Misc {
+    @SuppressWarnings("unused")
     public static final int DIGEST_METHOD_MD2 = 2;
+    @SuppressWarnings("unused")
     public static final int DIGEST_METHOD_MD5 = 5;
+    @SuppressWarnings("unused")
     public static final int DIGEST_METHOD_SHA1 = 1;
+    @SuppressWarnings("unused")
     public static final int DIGEST_METHOD_SHA256 = 256;
+    @SuppressWarnings("unused")
     public static final int DIGEST_METHOD_SHA512 = 512;
+
+    @SuppressWarnings("unused")
+    public static final String USER_AGENT = "Mozilla/5.0 (Windows; U; Windows NT 5.1; ru; rv:1.8.1.12) Gecko/20080201 Firefox"; //NON-NLS
 
     public static String getEncryptedHash(String str) {
         return getEncryptedHash(str, 5);
@@ -50,25 +55,25 @@ public class Misc {
         String sType;
         switch (type) {
             case 1:
-                sType = "SHA-1";
+                sType = "SHA-1"; //NON-NLS
                 break;
 //            case 2:
 //                sType = "MD2";
 //                break;
             case 5:
-                sType = "MD5";
+                sType = "MD5"; //NON-NLS
                 break;
             case 256:
-                sType = "SHA-256";
+                sType = "SHA-256"; //NON-NLS
                 break;
             case 384:
-                sType = "SHA-384";
+                sType = "SHA-384"; //NON-NLS
                 break;
             case 512:
-                sType = "SHA-512";
+                sType = "SHA-512"; //NON-NLS
                 break;
             default:
-                sType = "SHA-512";
+                sType = "SHA-512"; //NON-NLS
         }
 
         try {
@@ -125,25 +130,24 @@ public class Misc {
 
         //add reuqest header
         con.setRequestMethod("POST");
-        con.setRequestProperty(HttpHeaders.USER_AGENT,
-                "Mozilla/5.0 (Windows; U; Windows NT 5.1; ru; rv:1.8.1.12) Gecko/20080201 Firefox");
+        con.setRequestProperty(HttpHeaders.USER_AGENT, USER_AGENT);
 //        con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
-        con.setRequestProperty(HttpHeaders.CONTENT_TYPE, "application/json");
+        con.setRequestProperty(HttpHeaders.CONTENT_TYPE, Mime.APPLICATION_JSON);
         con.setRequestProperty(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
 
         // Send post request
         con.setDoOutput(true);
 
         OutputStreamWriter outputStreamWriter = new OutputStreamWriter(con.getOutputStream());
-        outputStreamWriter.write(URLEncoder.encode(post,urlCharset));
+        outputStreamWriter.write(URLEncoder.encode(post, urlCharset));
         outputStreamWriter.flush();
         outputStreamWriter.close();
 
         int responseCode = con.getResponseCode();
 //        int responseCode = con.getResponseCode();
 //        System.out.println("\nSending 'POST' request to URL : " + url);
-        System.out.println("Post parameters : " + post);
-        System.out.println("Response Code : " + responseCode);
+//        System.out.println("Post parameters : " + post);
+//        System.out.println("Response Code : " + responseCode);
 
         BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
         String inputLine;
@@ -169,8 +173,7 @@ public class Misc {
         URLConnection feedUrl;
         feedUrl = new URL(url).openConnection();
         feedUrl.setConnectTimeout(5000);
-        feedUrl.setRequestProperty(HttpHeaders.USER_AGENT,
-                "Mozilla/5.0 (Windows; U; Windows NT 5.1; ru; rv:1.8.1.12) Gecko/20080201 Firefox");
+        feedUrl.setRequestProperty(HttpHeaders.USER_AGENT, USER_AGENT);
         feedUrl.setRequestProperty(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
 
         in = feedUrl.getInputStream();
@@ -184,6 +187,7 @@ public class Misc {
         return sb.toString();
     }
 
+    @SuppressWarnings("HardCodedStringLiteral")
     public static String distanceToString(double meters) {
         if(Locale.US.equals(Locale.getDefault())) {
             meters = meters * 3.2808399;
@@ -209,6 +213,7 @@ public class Misc {
         }
     }
 
+    @SuppressWarnings("HardCodedStringLiteral")
     public static String durationToString(long millis) {
         StringBuilder res = new StringBuilder();
 
@@ -222,7 +227,7 @@ public class Misc {
         millis = millis - minutes * (60 * 1000L);
 
         int seconds = (int) (millis / (1000L));
-        millis = millis - seconds * (1000L);
+//        millis = millis - seconds * (1000L);
 
         if(days > 0 || hours > 0) {
             if(seconds > 30) {
@@ -240,19 +245,19 @@ public class Misc {
         }
 
         if(days > 0) {
-            res.append(days + "d");
+            res.append(days).append("d");
         }
         if(hours > 0) {
             if(res.length() > 0) res.append(" ");
-            res.append(hours + "h");
+            res.append(hours).append("h");
         }
         if(minutes > 0) {
             if(res.length() > 0) res.append(" ");
-            res.append(minutes + "m");
+            res.append(minutes).append("m");
         }
         if(seconds > 0) {
             if(res.length() > 0) res.append(" ");
-            res.append(seconds + "s");
+            res.append(seconds).append("s");
         }
 
         return res.toString();
@@ -283,8 +288,7 @@ public class Misc {
         if(object instanceof Float && Float.valueOf(object.toString()) == 0F) return true;
         if(object instanceof Double && Double.valueOf(object.toString()) == 0D) return true;
         if(object instanceof Map && ((Map) object).size() == 0) return true;
-        if(object instanceof List && ((List) object).size() == 0) return true;
-        return false;
+        return object instanceof List && ((List) object).size() == 0;
     }
 
     /**
@@ -292,26 +296,27 @@ public class Misc {
      * @param object any object
      * @return string
      */
+    @SuppressWarnings("HardCodedStringLiteral")
     public static String toStringDeep(Object object) {
         if(object == null) return "null";
-        String res = "toStringDeep: " + object.getClass().getCanonicalName();
-        Map<String, Boolean> own = new HashMap();
+        String res = "toStringDeep: " + object.getClass().getCanonicalName(); //NON-NLS
+        Map<String, Boolean> own = new HashMap<>();
         try {
             Field[] fields = object.getClass().getDeclaredFields();
-            String respart = "";
+            StringBuilder respart = new StringBuilder();
             if (fields.length > 0) {
                 for(Field field : fields) {
                     if (!Modifier.isPublic(field.getModifiers())) continue;
                     Object value = field.get(object);
                     own.put(field.getName(), true);
                     if (value != null && value instanceof Map) {
-                        respart += field.getName() + ": " + value;
+                        respart.append(field.getName()).append(": ").append(value);
                     } else if (value != null && value instanceof List) {
-                        respart += field.getName() + ": " + value;
+                        respart.append(field.getName()).append(": ").append(value);
                     } else {
-                        respart += field.getName() + ": " + value;
+                        respart.append(field.getName()).append(": ").append(value);
                     }
-                    respart += ", ";
+                    respart.append(", ");
                 }
                 if(respart.length() > 0) {
                     res += "\n>> Own variables: {" + respart + "}";
@@ -319,18 +324,18 @@ public class Misc {
             }
             fields = object.getClass().getFields();
             if (fields.length > 0) {
-                respart = "";
+                respart = new StringBuilder();
                 for(Field field : fields) {
                     if (own.containsKey(field.getName()) || !Modifier.isPublic(field.getModifiers())) continue;
                     Object value = field.get(object);
                     if (value != null && value instanceof Map) {
-                        respart += field.getName() + ": " + value;
+                        respart.append(field.getName()).append(": ").append(value);
                     } else if (value != null && value instanceof List) {
-                        respart += field.getName() + ": " + value;
+                        respart.append(field.getName()).append(": ").append(value);
                     } else {
-                        respart += field.getName() + ": " + value;
+                        respart.append(field.getName()).append(": ").append(value);
                     }
-                    respart += ", ";
+                    respart.append(", ");
                 }
                 if(respart.length() > 0) {
                     res += "\n>> Super variables: {" + respart + "}";
@@ -339,41 +344,41 @@ public class Misc {
             Method[] methods = object.getClass().getDeclaredMethods();
             own.clear();
             if (methods.length > 0) {
-                respart = "";
+                respart = new StringBuilder();
                 for(Method method : methods) {
                     if (!Modifier.isPublic(method.getModifiers())) continue;
                     own.put(method.getName(), true);
-                    respart += method.getName() + ", ";
+                    respart.append(method.getName()).append(", ");
                 }
                 if(respart.length() > 0) {
                     res += "\n>> Own methods: [" + respart + "]";
                 }
             }
             methods = object.getClass().getMethods();
-            List<Method> getters = new ArrayList();
+            List<Method> getters = new ArrayList<>();
             if (methods.length > 0) {
-                respart = "";
+                respart = new StringBuilder();
                 for(Method method : methods) {
                     if ((method.getName().startsWith("get") || method.getName().startsWith("is")) && method.getParameterTypes().length == 0) getters.add(method);
                     if ("equals".equals(method.getName()) || "getClass".equals(method.getName())
                             || "hashCode".equals(method.getName()) || "notify".equals(method.getName())
                             || "notifyAll".equals(method.getName()) || "wait".equals(method.getName())) continue;
                     if (own.containsKey(method.getName()) || !Modifier.isPublic(method.getModifiers())) continue;
-                    respart += method.getName() + ", ";
+                    respart.append(method.getName()).append(", ");
                 }
                 if(respart.length() > 0) {
                     res += "\n>> Super methods: [" + respart + "]";
                 }
             }
             if(getters.size() > 0) {
-                respart = "";
+                respart = new StringBuilder();
                 for(Method method: getters) {
                     if("getClass".equals(method.getName())) continue;
-                    respart += method.getName() + ": ";
+                    respart.append(method.getName()).append(": ");
                     Object value = method.invoke(object);
                     if(value != null && value instanceof String && value.toString().length() > 200) value = "[String " + value.toString().length() + " byte(s)]";
                     else if(value != null && value.toString().length() > 1024) value = "[" + value.getClass().getSimpleName() + " " + value.toString().length() + " byte(s)]";
-                    respart += value + ", ";
+                    respart.append(value).append(", ");
                 }
                 if(respart.length() > 0) {
                     res += "\n>> Getters: {" + respart + "}";
