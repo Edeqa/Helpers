@@ -116,6 +116,7 @@ public class Misc {
         return sb.toString();
     }
 
+    @SuppressWarnings("HardCodedStringLiteral")
     public static String getUrl(String url, String post, String urlCharset) throws IOException {
 
         if(urlCharset == null) urlCharset = "UTF-8";
@@ -163,7 +164,7 @@ public class Misc {
     }
 
     public static String getUrl(String url) throws IOException {
-        return getUrl(url, "UTF-8");
+        return getUrl(url, "UTF-8"); //NON-NLS
     }
 
     public static String getUrl(String url, String urlCharset) throws IOException {
