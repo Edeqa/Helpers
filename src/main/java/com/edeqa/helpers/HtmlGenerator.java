@@ -20,10 +20,15 @@ public class HtmlGenerator {
     public static final String HEAD = "head";
     public static final String HTML = "html";
     public static final String BODY = "body";
+    public static final String LANG = "lang";
     public static final String STYLE = "style";
     public static final String CLASS = "class";
     public static final String DIV = "div";
+    public static final String IMG = "img";
+    public static final String WIDTH = "width";
+    public static final String HEIGHT = "height";
     public static final String SCRIPT = "script";
+    public static final String NOSCRIPT = "noscript";
     public static final String TITLE = "title";
     public static final String ID = "id";
     public static final String SRC = "src";
@@ -65,7 +70,7 @@ public class HtmlGenerator {
     public static final String MANIFEST = "manifest";
 
 
-    ArrayList<String> notClosableTags = new ArrayList<>(Arrays.asList(new String[]{BR,META,INPUT}));
+    ArrayList<String> notClosableTags = new ArrayList<>(Arrays.asList(BR,META,INPUT));
     private Tag body;
     private Tag head;
     private int level = 0;
@@ -74,6 +79,7 @@ public class HtmlGenerator {
     public HtmlGenerator() {
         head = new Tag(HEAD);
         body = new Tag(BODY);
+        with(LANG, "en");
     }
 
     public Tag getHead(){
@@ -90,7 +96,11 @@ public class HtmlGenerator {
         parts.add(HTML);
         for(Map.Entry<String,String> entry: properties.entrySet()){
             if(entry.getValue() != null && entry.getValue().length() > 0) {
-                parts.add(entry.getKey() + "=\"" + entry.getValue() + "\"");
+                if(LANG.equals(entry.getKey())) {
+                    parts.add("lang=\"" + entry.getValue() + "\" xml:lang=\"" + entry.getValue() + "\" xmlns=\"http://www.w3.org/1999/xhtml\"");
+                } else {
+                    parts.add(entry.getKey() + "=\"" + entry.getValue() + "\"");
+                }
             } else {
                 parts.add(entry.getKey());
             }
@@ -106,13 +116,13 @@ public class HtmlGenerator {
         head = new Tag(HEAD);
         body = new Tag(BODY);
         properties.clear();
+        with(LANG, "en");
     }
 
     public HtmlGenerator with(String key,String value){
         properties.put(key,value);
         return this;
     }
-
 
     public class Tag {
         String tag;
