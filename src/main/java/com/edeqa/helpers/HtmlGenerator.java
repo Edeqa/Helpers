@@ -68,6 +68,8 @@ public class HtmlGenerator {
     public static final String VALUE = "value";
 
     public static final String MANIFEST = "manifest";
+    public static final String ASYNC = "async";
+    public static final String DEFER = "defer";
 
 
     ArrayList<String> notClosableTags = new ArrayList<>(Arrays.asList(BR,META,INPUT));
@@ -91,7 +93,9 @@ public class HtmlGenerator {
     }
 
     public String build(){
-        String res = "<!DOCTYPE html>\n";
+        StringBuilder buf = new StringBuilder();
+
+        buf.append("<!DOCTYPE html>\n");
         ArrayList<String> parts = new ArrayList<>();
         parts.add(HTML);
         for(Map.Entry<String,String> entry: properties.entrySet()){
@@ -105,11 +109,11 @@ public class HtmlGenerator {
                 parts.add(entry.getKey());
             }
         }
-        res += "<" + join(" ", parts) + ">";
-        res += head.build();
-        res += body.build();
-        res += "</html>";
-        return res;
+        buf.append("<").append(join(" ", parts)).append(">");
+        buf.append(head.build());
+        buf.append(body.build());
+        buf.append("</html>");
+        return buf.toString();
     }
 
     public void clear(){
@@ -155,7 +159,15 @@ public class HtmlGenerator {
                     String value = x.getValue();
                     key = key.replaceAll("\"","&quot;");
                     value = value.replaceAll("\"","&quot;");
-                    buf.append(" ").append(key).append("=\"").append(value).append("\"");
+
+                    if(ASYNC.equals(key) || DEFER.equals(key)) {
+                        if("true".equals(value)) {
+                            buf.append(" ").append(key);
+                        }
+                    } else {
+                        buf.append(" ").append(key).append("=\"").append(value).append("\"");
+                    }
+
                 }
             }
 
