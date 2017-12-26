@@ -207,4 +207,17 @@ public class MiscTest {
 
     }
 
+    @Test
+    public void log() {
+        Misc.log(new String(), "test", 1, true, null, new HashMap(), new Misc());
+        Misc.log(new Misc());
+        Misc.log("test", 1, true, null, new HashMap());
+    }
+
+    @Test
+    public void err() {
+        Misc.err(new String(), new Throwable("Test throwable"), "test", 1, true, null, new HashMap(), new Misc());
+        Misc.err(new Misc());
+        Misc.err("test", new Throwable("Test throwable"), "test", 1, true, null, new HashMap());
+    }
 }

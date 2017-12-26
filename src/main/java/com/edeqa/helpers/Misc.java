@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -23,7 +24,9 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.security.MessageDigest;
 import java.security.SecureRandom;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -46,6 +49,8 @@ public class Misc {
 
     @SuppressWarnings("unused")
     public static final String USER_AGENT = "Mozilla/5.0 (Windows; U; Windows NT 5.1; ru; rv:1.8.1.12) Gecko/20080201 Firefox"; //NON-NLS
+
+    public static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS z", Locale.getDefault());
 
     public static String getEncryptedHash(String str) {
         return getEncryptedHash(str, 5);
@@ -278,7 +283,7 @@ public class Misc {
      * <li>empty list
      * </ul>
      * @param object any object
-     * @return
+     * @return boolean
      */
     public static boolean isEmpty(Object object) {
         if(object == null) return true;
@@ -389,6 +394,67 @@ public class Misc {
             e.printStackTrace();
         }
         return res;
+    }
+
+    /**
+     * Prints list of arguments into STDOUT. First argument can be recognized as header.
+     * @param text list of arguments
+     */
+    public static void log(Object... text) {
+        StringBuilder str = new StringBuilder();
+        String tag = "Utils";
+        int count = 0;
+        for (Object aText : text) {
+            if(aText == null) {
+                str.append("null ");
+            } else if((count++) == 0 && aText instanceof Serializable) {
+                tag = aText.toString();
+            } else if(aText instanceof Serializable) {
+                str.append(aText.toString()).append(" ");
+            } else if((count++) == 0) {
+//                str += aText.getClass().getSimpleName() + ": ";
+                tag = aText.getClass().getSimpleName();
+            } else {
+                str.append(aText.toString()).append(" ");
+            }
+        }
+        System.out.println(dateFormat.format(new Date()) + "/" + tag + " " + str.toString());
+        System.out.flush();
+//        Log.i(tag, str.toString());
+    }
+
+    /**
+     * Prints list of arguments into STDERR. First argument can be recognized as header.
+     * @param text list of arguments
+     */
+    public static void err(Object... text) {
+        StringBuilder str = new StringBuilder();
+        String tag = "Utils";
+        Throwable e = null;
+        int count = 0;
+        for (Object aText : text) {
+            if(aText == null) {
+                str.append("null ");
+            } else if (aText instanceof Throwable) {
+                str.append(aText).append(" ");
+                e = (Throwable) aText;
+            } else if((count++) == 0 && aText instanceof Serializable) {
+                tag = aText.toString();
+            } else if(aText instanceof Serializable) {
+                str.append(aText.toString()).append(" ");
+            } else if((count++) == 0) {
+                tag = aText.getClass().getSimpleName();
+//                str += aText.getClass().getSimpleName() + ": ";
+            } else {
+                str.append(aText.toString()).append(" ");
+            }
+        }
+        System.err.println(dateFormat.format(new Date()) + "/" + tag + " " + str.toString());
+        System.err.flush();
+
+//        Log.e(tag, str.toString());
+        if(e != null) e.printStackTrace();
+
     }
 
 }

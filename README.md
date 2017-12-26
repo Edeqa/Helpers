@@ -19,7 +19,7 @@ Step 1. Add the JitPack repository in your root build.gradle at the end of repos
 Step 2. Add the dependency in the app's build.gradle:
 
     dependencies {
-        compile 'com.github.edeqa:helpers:0.1'
+        compile 'com.github.edeqa:helpers:1.2'
     }
 
 ### Maven
@@ -46,6 +46,12 @@ Step 2. Add the dependency:
 See the [Javadoc](https://edeqa.github.io/Helpers/) to learn more about the API.
 
 ## History
+
+1.2 - Misc.log, Misc.err; HtmlGenerator#build improved; HtmlGenerator.IMG
+
+1.1 - Misc.toStringDeep
+
+1.0 - fixes
 
 0.1 - initial version
 
