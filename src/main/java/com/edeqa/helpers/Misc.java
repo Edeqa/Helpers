@@ -380,11 +380,18 @@ public class Misc {
                 respart = new StringBuilder();
                 for(Method method: getters) {
                     if("getClass".equals(method.getName())) continue;
-                    respart.append(method.getName()).append(": ");
-                    Object value = method.invoke(object);
-                    if(value != null && value instanceof String && value.toString().length() > 200) value = "[String " + value.toString().length() + " byte(s)]";
-                    else if(value != null && value.toString().length() > 1024) value = "[" + value.getClass().getSimpleName() + " " + value.toString().length() + " byte(s)]";
-                    respart.append(value).append(", ");
+                    try {
+                        respart.append(method.getName()).append(": ");
+                        Object value = method.invoke(object);
+                        if (value != null && value instanceof String && value.toString().length() > 200)
+                            value = "[String " + value.toString().length() + " byte(s)]";
+                        else if (value != null && value.toString().length() > 1024)
+                            value = "[" + value.getClass().getSimpleName() + " " + value.toString().length() + " byte(s)]";
+                        respart.append(value);
+                        respart.append(", ");
+                    } catch(Exception e) {
+//                        e.printStackTrace();
+                    }
                 }
                 if(respart.length() > 0) {
                     res += "\n>> Getters: {" + respart + "}";
