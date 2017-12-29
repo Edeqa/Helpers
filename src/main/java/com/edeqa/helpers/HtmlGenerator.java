@@ -35,6 +35,7 @@ public class HtmlGenerator {
     public static final String HTTP_EQUIV = "http-equiv";
     public static final String CONTENT = "content";
     public static final String SIZES = "sizes";
+    public static final String TABINDEX = "tabindex";
     public static final String TABLE = "table";
     public static final String TR = "tr";
     public static final String TH = "th";
@@ -101,7 +102,7 @@ public class HtmlGenerator {
         for(Map.Entry<String,String> entry: properties.entrySet()){
             if(entry.getValue() != null && entry.getValue().length() > 0) {
                 if(LANG.equals(entry.getKey())) {
-                    parts.add("lang=\"" + entry.getValue() + "\" xml:lang=\"" + entry.getValue() + "\" xmlns=\"http://www.w3.org/1999/xhtml\"");
+                    parts.add("lang=\"" + entry.getValue() + "\" xml:lang=\"" + entry.getValue() + "\" xmlns=\"http://edequate.w3.org/1999/xhtml\"");
                 } else {
                     parts.add(entry.getKey() + "=\"" + entry.getValue() + "\"");
                 }

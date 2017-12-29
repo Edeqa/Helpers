@@ -32,7 +32,7 @@ public class HtmlGeneratorTest {
     @Test
     public void build() throws Exception {
         Assert.assertEquals("<!DOCTYPE html>\n" +
-                "<html lang=\"en\" xml:lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\">\n" +
+                "<html lang=\"en\" xml:lang=\"en\" xmlns=\"http://edequate.w3.org/1999/xhtml\">\n" +
                 "<head></head>\n" +
                 "<body></body></html>", html.build());
     }
@@ -62,7 +62,7 @@ public class HtmlGeneratorTest {
         html.getBody().add(HtmlGenerator.DIV).with(HtmlGenerator.DIV, o);
 
         Assert.assertEquals("<!DOCTYPE html>\n" +
-                "<html meta=\"test\" rel lang=\"en\" xml:lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\">\n" +
+                "<html meta=\"test\" rel lang=\"en\" xml:lang=\"en\" xmlns=\"http://edequate.w3.org/1999/xhtml\">\n" +
                 "<head></head>\n" +
                 "<body>\n" +
                 "   <div id=\"test\"></div>\n" +
