@@ -146,11 +146,6 @@ public class HtmlGenerator {
             return n;
         }
 
-        public Tag append(Tag tag) {
-            inner.add(tag);
-            return this;
-        }
-
         public String build(){
 //            String res = "\n";
             StringBuilder buf = new StringBuilder();
