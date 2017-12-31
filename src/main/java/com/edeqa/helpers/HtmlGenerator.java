@@ -24,6 +24,7 @@ public class HtmlGenerator {
     public static final String STYLE = "style";
     public static final String CLASS = "class";
     public static final String DIV = "div";
+    public static final String SPAN = "span";
     public static final String IMG = "img";
     public static final String WIDTH = "width";
     public static final String HEIGHT = "height";
