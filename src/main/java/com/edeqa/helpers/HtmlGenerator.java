@@ -132,8 +132,6 @@ public class HtmlGenerator {
 
     public class Tag {
         String tag;
-//        String text;
-
         ArrayList<Object> inner = new ArrayList<>();
         Map<String,String> properties = new HashMap<>();
 
@@ -148,7 +146,6 @@ public class HtmlGenerator {
         }
 
         public String build(){
-//            String res = "\n";
             StringBuilder buf = new StringBuilder();
             buf.append("\n");
             for(int i=0;i<level;i++) buf.append("   ");
@@ -169,7 +166,6 @@ public class HtmlGenerator {
                     } else {
                         buf.append(" ").append(key).append("=\"").append(value).append("\"");
                     }
-
                 }
             }
 
@@ -185,7 +181,6 @@ public class HtmlGenerator {
                     buf.append(x);
                 }
             }
-//            if(text != null) buf.append(text);
             if(indent) {
                 buf.append("\n");
                 for (int i = 0; i < level; i++) buf.append("   ");
