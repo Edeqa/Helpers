@@ -13,6 +13,7 @@ public class Mime {
             TEXT_HTML = "text/html",
             TEXT_EVENT_STREAM = "text/event-stream",
             APPLICATION_OCTET_STREAM = "application/octet-stream",
+            APPLICATION_UNKNOWN = "application/unknown",
             APPLICATION_JAVASCRIPT = "application/javascript",
             TEXT_CSS = "text/css",
             APPLICATION_X_WEB_APP_MANIFEST_JSON = "application/x-web-app-manifest+json",
