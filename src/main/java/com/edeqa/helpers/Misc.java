@@ -145,15 +145,25 @@ public class Misc {
         con.setDoOutput(true);
 
         OutputStreamWriter outputStreamWriter = new OutputStreamWriter(con.getOutputStream());
-        outputStreamWriter.write(URLEncoder.encode(post, urlCharset));
+        outputStreamWriter.write(post);
+//        outputStreamWriter.write(URLEncoder.encode(post, urlCharset));
         outputStreamWriter.flush();
         outputStreamWriter.close();
 
-        int responseCode = con.getResponseCode();
-//        int responseCode = con.getResponseCode();
-//        System.out.println("\nSending 'POST' request to URL : " + url);
-//        System.out.println("Post parameters : " + post);
-//        System.out.println("Response Code : " + responseCode);
+        try {
+            BufferedReader error = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+            String inputLine1;
+            StringBuilder response1 = new StringBuilder();
+
+            while ((inputLine1 = error.readLine()) != null) {
+                response1.append(inputLine1);
+            }
+            error.close();
+            System.out.println("Error getting url: " + url);
+            System.out.println("--- post parameters : " + post);
+            System.out.println("--- response Code : " + con.getResponseCode() + ", " + con.getResponseMessage());
+            System.out.println("--- error message:" + response1.toString());
+        } catch(Exception e) {}
 
         BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
         String inputLine;
