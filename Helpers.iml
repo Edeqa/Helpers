@@ -28,7 +28,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" scope="PROVIDED" name="json-20171018" level="project" />
-    <orderEntry type="library" exported="" scope="PROVIDED" name="guava-20.0" level="project" />
     <orderEntry type="library" exported="" scope="PROVIDED" name="junit-4.12" level="project" />
     <orderEntry type="library" exported="" scope="PROVIDED" name="hamcrest-core-1.3" level="project" />
   </component>
