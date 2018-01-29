@@ -103,7 +103,7 @@ public class HtmlGenerator {
         for(Map.Entry<String,String> entry: properties.entrySet()){
             if(entry.getValue() != null && entry.getValue().length() > 0) {
                 if(LANG.equals(entry.getKey())) {
-                    parts.add("lang=\"" + entry.getValue() + "\" xml:lang=\"" + entry.getValue() + "\" xmlns=\"http://edequate.w3.org/1999/xhtml\"");
+                    parts.add("lang=\"" + entry.getValue() + "\" xml:lang=\"" + entry.getValue() + "\" xmlns=\"http://www.w3.org/1999/xhtml\"");
                 } else {
                     parts.add(entry.getKey() + "=\"" + entry.getValue() + "\"");
                 }
