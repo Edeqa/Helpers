@@ -294,6 +294,7 @@ public class Misc {
      * @param object any object
      * @return boolean
      */
+    @SuppressWarnings("SimplifiableIfStatement")
     public static boolean isEmpty(Object object) {
         if(object == null) return true;
         if(object instanceof Boolean && !((Boolean) object)) return true;

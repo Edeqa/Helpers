@@ -7,8 +7,8 @@ import java.util.Map;
 
 public class MimeTypes {
 
-    private Map<String, MimeType> types;
-    private Map<String, MimeType> fullNames;
+    private final Map<String, MimeType> types;
+    private final Map<String, MimeType> fullNames;
 
     private MimeType defaultMime;
 
@@ -65,16 +65,16 @@ public class MimeTypes {
     public MimeTypes useDefault() {
         add(new MimeType().setFullName("manifest.json").setMime(Mime.APPLICATION_X_WEB_APP_MANIFEST_JSON).setText(true));
 
-        add(new MimeType().setType("html").setMime(Mime.TEXT_HTML).setText(true));
-        add(new MimeType().setType("js").setMime(Mime.APPLICATION_JAVASCRIPT).setText(true));
-        add(new MimeType().setType("css").setMime(Mime.TEXT_CSS).setText(true));
-        add(new MimeType().setType("xml").setMime(Mime.APPLICATION_XML).setText(true));
-        add(new MimeType().setType("json").setMime(Mime.APPLICATION_JSON).setText(true));
+        add(new MimeType().setType("html").setMime(Mime.TEXT_HTML).setText(true).setGzip(true));
+        add(new MimeType().setType("js").setMime(Mime.APPLICATION_JAVASCRIPT).setText(true).setGzip(true));
+        add(new MimeType().setType("css").setMime(Mime.TEXT_CSS).setText(true).setGzip(true));
+        add(new MimeType().setType("xml").setMime(Mime.APPLICATION_XML).setText(true).setGzip(true));
+        add(new MimeType().setType("json").setMime(Mime.APPLICATION_JSON).setText(true).setGzip(true));
         add(new MimeType().setType("gif").setMime(Mime.IMAGE_GIF));
         add(new MimeType().setType("png").setMime(Mime.IMAGE_PNG));
         add(new MimeType().setType("jpg").setMime(Mime.IMAGE_JPG));
         add(new MimeType().setType("ico").setMime(Mime.IMAGE_ICO));
-        add(new MimeType().setType("svg").setMime(Mime.IMAGE_SVG_XML).setText(true));
+        add(new MimeType().setType("svg").setMime(Mime.IMAGE_SVG_XML).setText(true).setGzip(true));
         add(new MimeType().setType("mp3").setMime(Mime.AUDIO_MP3));
         add(new MimeType().setType("ogg").setMime(Mime.AUDIO_OGG));
         add(new MimeType().setType("m4r").setMime(Mime.AUDIO_AAC));
