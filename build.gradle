@@ -9,7 +9,9 @@ repositories {
 dependencies {
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile "org.json:json:20171018"
+    //noinspection GradleDynamicVersion
     compile "com.google.guava:guava:+"
+    //noinspection GradleDynamicVersion
     compile "junit:junit:+"
 }
 
