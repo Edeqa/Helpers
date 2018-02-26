@@ -134,7 +134,7 @@ public class MiscTest {
 
         String notEmptyString = "not-empty";
         Object notNullObject = "not-null-object";
-        Map notEmptyMap = new HashMap();notEmptyMap.put("a","b");
+        Map<String,String> notEmptyMap = new HashMap<>();notEmptyMap.put("a","b");
         Boolean notFalseBoolean = true;
         Integer notZeroInteger = 1;
         Long notZeroLong = 1L;
@@ -142,8 +142,10 @@ public class MiscTest {
         Double notZeroDouble = 1.D;
 
         assertTrue(Misc.isEmpty(emptyString));
+        //noinspection ConstantConditions
         assertTrue(Misc.isEmpty(nullObject));
         assertTrue(Misc.isEmpty(emptyMap));
+        //noinspection ConstantConditions
         assertTrue(Misc.isEmpty(falseBoolean));
         assertTrue(Misc.isEmpty(zeroInteger));
         assertTrue(Misc.isEmpty(zeroLong));
@@ -153,6 +155,7 @@ public class MiscTest {
         assertTrue(!Misc.isEmpty(notEmptyString));
         assertTrue(!Misc.isEmpty(notNullObject));
         assertTrue(!Misc.isEmpty(notEmptyMap));
+        //noinspection ConstantConditions
         assertTrue(!Misc.isEmpty(notFalseBoolean));
         assertTrue(!Misc.isEmpty(notZeroInteger));
         assertTrue(!Misc.isEmpty(notZeroLong));
@@ -164,10 +167,10 @@ public class MiscTest {
     @Test
     public void toStringDeep() throws Exception {
         class TestObject {
-            private Map privateMap = new HashMap();
-            public Map publicMap = new HashMap();
-            private List privateList = new ArrayList<>();
-            public List publicList = new ArrayList<>();
+            private Map<String,String> privateMap = new HashMap<>();
+            public Map<String,String> publicMap = new HashMap<>();
+            private List<String> privateList = new ArrayList<>();
+            public List<String> publicList = new ArrayList<>();
             private String privateString = "private string";
             public String publicString = "public string";
             private void privateTestMethod() {}
@@ -182,17 +185,17 @@ public class MiscTest {
             }
         }
         class ChildTestObject extends TestObject {
-            private Map privateChildMap = new HashMap();
-            public Map publicChildMap = new HashMap();
-            private List privateChildList = new ArrayList<>();
-            public List publicChildList = new ArrayList<>();
+            private Map<String,String> privateChildMap = new HashMap<>();
+            public Map<String,String> publicChildMap = new HashMap<>();
+            private List<String> privateChildList = new ArrayList<>();
+            public List<String> publicChildList = new ArrayList<>();
             private String privateChildString = "private child string";
             public String publicChildString = "public child string";
             private void privateChildTestMethod() {}
             public void publicChildTestMethod() {}
             private String getPrivateChildString() {return privateChildString;}
             public String getPublicChildString() {return publicChildString;}
-            ChildTestObject(){
+            private ChildTestObject(){
                 super();
                 privateChildMap.put("map key 3", "map value 3");
                 publicChildMap.put("map key 4", "map value 4");
