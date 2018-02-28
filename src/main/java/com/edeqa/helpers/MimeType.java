@@ -57,6 +57,31 @@ public class MimeType {
         return getMime() + (isText() ? "; charset=" + getCharset() : "");
     }
 
+    public String fetchPrimary() {
+        if(getMime() != null) {
+            return getMime().split("/")[0];
+        }
+        return null;
+    }
+
+    public boolean fetchStatic() {
+        boolean persistent = false;
+        switch (getMime()) {
+            case Mime.IMAGE_GIF:
+            case Mime.IMAGE_PNG:
+            case Mime.IMAGE_ICO:
+            case Mime.IMAGE_JPG:
+            case Mime.IMAGE_SVG_XML:
+            case Mime.AUDIO_AAC:
+            case Mime.AUDIO_MP3:
+            case Mime.AUDIO_OGG:
+            case Mime.TEXT_CSS:
+            case Mime.APPLICATION_JAVASCRIPT:
+                persistent = true;
+        }
+        return persistent;
+    }
+
     public String getType() {
         return type;
     }

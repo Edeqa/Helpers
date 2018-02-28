@@ -21,7 +21,7 @@ public class Mime {
             AUDIO_OGG = "audio/ogg",
             AUDIO_AAC = "audio/aac",
             APPLICATION_XML = "application/xml",
-            IMAGE_GIF = "image/png",
+            IMAGE_GIF = "image/gif",
             IMAGE_PNG = "image/png",
             IMAGE_JPG = "image/jpg",
             IMAGE_ICO = "image/ico",
