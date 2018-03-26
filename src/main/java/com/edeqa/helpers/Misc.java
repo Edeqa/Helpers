@@ -8,6 +8,9 @@ package com.edeqa.helpers;
 
 import com.google.common.net.HttpHeaders;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,6 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -474,4 +478,32 @@ public class Misc {
 
     }
 
+    public static Object mergeJSON(Object baseJSON, Object overrideJSON) {
+        if(baseJSON == null && overrideJSON == null) {
+            err("Admins", "found issue merging JSONs: both are nulls");
+        } else if(baseJSON == null) {
+            baseJSON = overrideJSON;
+        } else if(baseJSON instanceof JSONObject && overrideJSON instanceof JSONObject) {
+            Iterator<String> keys = ((JSONObject) overrideJSON).keys();
+            while(keys.hasNext()) {
+                String key = keys.next();
+                if(!((JSONObject) baseJSON).has(key) || (!(((JSONObject) baseJSON).get(key) instanceof JSONObject) && !(((JSONObject) baseJSON).get(key) instanceof JSONArray))) {
+                    ((JSONObject) baseJSON).put(key, ((JSONObject) overrideJSON).get(key));
+                } else {
+                    err("Admins", "found collision merging JSONs for key:", key);
+                }
+            }
+        } else if(baseJSON instanceof JSONArray && overrideJSON instanceof JSONArray) {
+            for(int i = 0; i < ((JSONArray) overrideJSON).length(); i++) {
+                if(((JSONArray) baseJSON).length() < i) {
+                    ((JSONArray) baseJSON).put(((JSONArray) overrideJSON).get(i));
+                } else {
+                    mergeJSON(((JSONArray) baseJSON).get(i), ((JSONArray) overrideJSON).get(i));
+                }
+            }
+        } else {
+            err("Admins", "found issue merging JSONs:", baseJSON, overrideJSON);
+        }
+        return baseJSON;
+    }
 }

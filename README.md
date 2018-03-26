@@ -47,6 +47,8 @@ See the [Javadoc](https://edeqa.github.io/Helpers/) to learn more about the API.
 
 ## History
 
+1.4 - Misc.deepMergeJSON
+
 1.3 - HtmlGenerator.TABINDEX, HtmlGenerator.SPAN
 
 1.2 - Misc.log, Misc.err; HtmlGenerator#build improved; HtmlGenerator.IMG
