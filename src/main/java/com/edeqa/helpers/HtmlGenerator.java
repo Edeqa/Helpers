@@ -19,6 +19,7 @@ public class HtmlGenerator {
     public static final String META = "meta";
     public static final String HEAD = "head";
     public static final String HTML = "html";
+    public static final String BUTTON = "button";
     public static final String BODY = "body";
     public static final String LANG = "lang";
     public static final String STYLE = "style";
@@ -36,6 +37,7 @@ public class HtmlGenerator {
     public static final String HTTP_EQUIV = "http-equiv";
     public static final String CONTENT = "content";
     public static final String SIZES = "sizes";
+    public static final String ONCLICK = "onclick";
     public static final String TABINDEX = "tabindex";
     public static final String TABLE = "table";
     public static final String TR = "tr";

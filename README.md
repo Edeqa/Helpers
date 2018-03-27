@@ -47,7 +47,7 @@ See the [Javadoc](https://edeqa.github.io/Helpers/) to learn more about the API.
 
 ## History
 
-1.4 - Misc.deepMergeJSON
+1.4 - Misc.deepMergeJSON; HtmlGenerator.BUTTON, HtmlGenerator.ONCLICK
 
 1.3 - HtmlGenerator.TABINDEX, HtmlGenerator.SPAN
 
