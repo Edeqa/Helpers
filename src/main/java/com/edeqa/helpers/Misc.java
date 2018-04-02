@@ -308,6 +308,8 @@ public class Misc {
         if(object instanceof Float && Float.valueOf(object.toString()) == 0F) return true;
         if(object instanceof Double && Double.valueOf(object.toString()) == 0D) return true;
         if(object instanceof Map && ((Map) object).size() == 0) return true;
+        if(object instanceof JSONObject && ((JSONObject) object).length() == 0) return true;
+        if(object instanceof JSONArray && ((JSONArray) object).length() == 0) return true;
         return object instanceof List && ((List) object).size() == 0;
     }
 
