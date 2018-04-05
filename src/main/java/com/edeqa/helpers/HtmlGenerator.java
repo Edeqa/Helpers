@@ -6,7 +6,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -113,7 +112,7 @@ public class HtmlGenerator {
                 parts.add(entry.getKey());
             }
         }
-        buf.append("<").append(join(" ", parts)).append(">");
+        buf.append("<").append(Misc.join(" ", parts)).append(">");
         buf.append(head.build());
         buf.append(body.build());
         buf.append("</html>");
@@ -227,20 +226,6 @@ public class HtmlGenerator {
             inner.add(number.toString());
             return this;
         }
-    }
-
-    @SuppressWarnings("SameParameterValue")
-    private static String join(String conjunction, List<String> list) {
-        StringBuilder sb = new StringBuilder();
-        boolean first = true;
-        for (String item : list) {
-            if (first)
-                first = false;
-            else
-                sb.append(conjunction);
-            sb.append(item);
-        }
-        return sb.toString();
     }
 
 }
