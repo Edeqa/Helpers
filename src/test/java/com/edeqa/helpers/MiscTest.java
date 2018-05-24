@@ -1,7 +1,5 @@
 package com.edeqa.helpers;
 
-import org.json.JSONObject;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -48,35 +46,35 @@ public class MiscTest {
     }
 
 
-    @Test
-    public void getUrl() throws Exception {
-        String res = Misc.getUrl("http://echo.jsontest.com/one/two");
-        LOGGER.info(res);
-        JSONObject json = new JSONObject(res);
-        assertEquals("two", json.getString("one"));
-    }
-
-    @Test
-    public void getUrl1() throws Exception {
-        String res = Misc.getUrl("http://echo.jsontest.com/one/two", "UTF-8");
-        LOGGER.info(res);
-        JSONObject json = new JSONObject(res);
-        assertEquals("two", json.getString("one"));
-    }
-
-    @Test
-    public void getUrl2() throws Exception {
-        String res = Misc.getUrl("http://echo.jsontest.com", "{\"one\":\"two\"}", "UTF-8");
-        LOGGER.info(res);
-        JSONObject json = new JSONObject(res);
-        assertEquals("{\"\": \"\"}", res);
-
-        try {
-            res = Misc.getUrl("https://api.ipify.org/?format=json", "{\"one\":\"two\"}", "UTF-8");
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    @Test
+//    public void getUrl() throws Exception {
+//        String res = Misc.getUrl("http://echo.jsontest.com/one/two");
+//        LOGGER.info(res);
+//        JSONObject json = new JSONObject(res);
+//        assertEquals("two", json.getString("one"));
+//    }
+//
+//    @Test
+//    public void getUrl1() throws Exception {
+//        String res = Misc.getUrl("http://echo.jsontest.com/one/two", "UTF-8");
+//        LOGGER.info(res);
+//        JSONObject json = new JSONObject(res);
+//        assertEquals("two", json.getString("one"));
+//    }
+//
+//    @Test
+//    public void getUrl2() throws Exception {
+//        String res = Misc.getUrl("http://echo.jsontest.com", "{\"one\":\"two\"}", "UTF-8");
+//        LOGGER.info(res);
+//        JSONObject json = new JSONObject(res);
+//        assertEquals("{\"\": \"\"}", res);
+//
+//        try {
+//            res = Misc.getUrl("https://api.ipify.org/?format=json", "{\"one\":\"two\"}", "UTF-8");
+//        } catch(Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     @Test
     public void getUnique() throws Exception {
