@@ -28,6 +28,7 @@ import java.security.MessageDigest;
 import java.security.SecureRandom;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -399,10 +400,15 @@ public class Misc {
                     try {
                         respart.append(method.getName()).append(": ");
                         Object value = method.invoke(object);
-                        if (value != null && value instanceof String && value.toString().length() > 200)
+                        if (value != null && value instanceof String && value.toString().length() > 200) {
                             value = "[String " + value.toString().length() + " byte(s)]";
-                        else if (value != null && value.toString().length() > 1024)
+                        } else if (value instanceof String[] && ((String[]) value).length <= 20) {
+                            value = Arrays.asList((String[]) value).toString();
+                        } else if (value instanceof String[] && ((String[]) value).length > 20) {
+                            value = "[String[] " + ((String[]) value).length + " item(s)]";
+                        } else if (value != null && value.toString().length() > 1024) {
                             value = "[" + value.getClass().getSimpleName() + " " + value.toString().length() + " byte(s)]";
+                        }
                         respart.append(value);
                         respart.append(", ");
                     } catch(Exception e) {
