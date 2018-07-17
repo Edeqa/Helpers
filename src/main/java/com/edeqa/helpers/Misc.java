@@ -55,6 +55,7 @@ public class Misc {
     public static final String USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.132 Safari/537.36"; //NON-NLS
 
     public static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS z", Locale.getDefault());
+    private static boolean continued;
 
     public static String getEncryptedHash(String str) {
         return getEncryptedHash(str, 5);
@@ -430,6 +431,22 @@ public class Misc {
      * @param text list of arguments
      */
     public static void log(Object... text) {
+        System.out.println(_log(continued, text));
+        continued = false;
+//        Log.i(tag, str.toString());
+    }
+
+    /**
+     * Prints list of arguments into STDOUT. First argument can be recognized as header.
+     * @param text list of arguments
+     */
+    public static void logOpened(Object... text) {
+        System.out.print(_log(continued, text));
+        continued = true;
+//        Log.i(tag, str.toString());
+    }
+
+    private static String _log(boolean continued, Object... text) {
         StringBuilder str = new StringBuilder();
         String tag = "Utils";
         int count = 0;
@@ -443,13 +460,11 @@ public class Misc {
             } else if((count++) == 0) {
 //                str += aText.getClass().getSimpleName() + ": ";
                 tag = aText.getClass().getSimpleName();
-            } else {
+            } else if(continued) {
                 str.append(aText.toString()).append(" ");
             }
         }
-        System.out.println(dateFormat.format(new Date()) + "/" + tag + " " + str.toString());
-        System.out.flush();
-//        Log.i(tag, str.toString());
+        return (continued ? "" : dateFormat.format(new Date()) + "/" + tag) + " " + str.toString();
     }
 
     /**
