@@ -6,8 +6,9 @@ import java.util.Date;
 import java.util.List;
 
 public class Timer {
-    private long start;
     private List<Long> ticks;
+    private long intermediate;
+    private long start;
 
     public Timer() {
         ticks = new ArrayList<>();
@@ -15,16 +16,22 @@ public class Timer {
 
     public Timer start() {
         start = Calendar.getInstance().getTimeInMillis();
-        ticks.add(start);
+        intermediate = Calendar.getInstance().getTimeInMillis();
+        ticks.add(intermediate);
         return this;
     }
 
     public Long tick() {
         long now = Calendar.getInstance().getTimeInMillis();
         ticks.add(now);
-        long delta = now - start;
-        start = now;
+        long delta = now - intermediate;
+        intermediate = now;
         return delta;
+    }
+
+    public Long total() {
+        long now = Calendar.getInstance().getTimeInMillis();
+        return now - start;
     }
 
     public Long stop() {
@@ -36,7 +43,7 @@ public class Timer {
 
     public Timer startLog() {
         start();
-        System.out.println("Timer started at: " + new Date(start).toString());
+        System.out.println("Timer started at: " + new Date(intermediate).toString());
         return this;
     }
 
@@ -50,6 +57,6 @@ public class Timer {
 
     public void stopLog() {
         stop();
-        System.out.println("Timer stopped at: " + new Date(start).toString() + " with " + (ticks.size() - 2) + " tick(s) and total time: " + (ticks.get(ticks.size() - 1) - ticks.get(0)) + " ms");
+        System.out.println("Timer stopped at: " + new Date(intermediate).toString() + " with " + (ticks.size() - 2) + " tick(s) and total time: " + (ticks.get(ticks.size() - 1) - ticks.get(0)) + " ms");
     }
 }
